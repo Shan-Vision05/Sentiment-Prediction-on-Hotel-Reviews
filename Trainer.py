@@ -1,6 +1,6 @@
 import torch
 import random
-import tqdm
+from tqdm import tqdm
 import matplotlib.pyplot as plt
 
 ### Defining Hyperparameters
@@ -26,7 +26,8 @@ def TrainStep(model:torch.nn.Module, X_train, y_train):
     model.train()
     
     train_losses = []
-    for batch in tqdm(batches):
+    optimizer.zero_grad()
+    for batch in batches:
         X_Btrain, y_Btrain = zip(*batch)
 
         # Convert to tensors
@@ -37,7 +38,8 @@ def TrainStep(model:torch.nn.Module, X_train, y_train):
         y_Btrain = torch.unsqueeze(y_Btrain, dim = 1) 
 
 
-        optimizer.zero_grad()
+        # model.zero_grad()
+        
 
         log_probs = model(X_Btrain)
 
@@ -61,7 +63,7 @@ def TestStep(model, X_test, y_test):
         model.eval()
 
         test_losses = []
-        for batch in tqdm(batches):
+        for batch in batches:
             X_Btest, y_Btest = zip(*batch)
 
             # Convert to tensors
@@ -73,7 +75,7 @@ def TestStep(model, X_test, y_test):
 
             log_probs = model(X_Btest)
 
-            loss = loss_function(log_probs, X_Btest)
+            loss = loss_function(log_probs, y_Btest)
 
             test_losses.append(loss.item())
 
@@ -98,11 +100,11 @@ def Plot_Train_Test_Loss(epochs, train_loss, test_loss):
 
     plt.show()
 
-def Train(model, X_train, y_train, X_test, y_test, epochs = 100):
+def Train(model: torch.nn.Module, X_train, y_train, X_test, y_test, epochs = 100):
     
     train_losses =[]
     test_losses = []
-    for epoch in epochs():
+    for epoch in tqdm(range(epochs)):
 
         print(f'Epoch: {epoch}')
         train_losses.append(TrainStep(model, X_train, y_train))
