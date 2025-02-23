@@ -29,9 +29,16 @@ def main():
 
     X_train, y_train, X_test, y_test = Load_and_Vectorize_Data()
 
+    ## Train function defined in Solution.py
     Train(model, X_train, y_train, X_test, y_test)
 
+
     ## this function is responsible for calculating Precision, Recall and F1-Score
+    ## On Dev Set
+    Evaluate_Model_onDevSet(model, X_test, y_test)
+
+    ## this function is responsible for calculating Precision, Recall and F1-Score
+    ## On Test Data
     Evaluate_Model(model)
 
 if __name__ == '__main__':

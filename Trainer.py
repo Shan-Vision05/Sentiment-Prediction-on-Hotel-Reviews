@@ -19,7 +19,7 @@ def GetBatches(X, y, batch_size = 16):
 
 def TrainStep(model:torch.nn.Module, X_train, y_train):
 
-    optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
+    optimizer = torch.optim.SGD(model.parameters(), lr=0.1)
     batches = GetBatches(X_train, y_train)
 
     ## Setting Train environment
@@ -94,7 +94,7 @@ def Plot_Train_Test_Loss(epochs, train_loss, test_loss):
 
     plt.xlabel("Epochs")
     plt.ylabel("Loss")
-    plt.title("Training vs Test Loss")
+    plt.title("Training vs Test Loss: Base Model (LR:0.1, BS:16, Epochs:100)")
     plt.legend()
     plt.grid(True)
 

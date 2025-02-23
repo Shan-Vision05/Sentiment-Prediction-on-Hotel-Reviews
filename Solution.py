@@ -123,6 +123,19 @@ def GetPredictions(model, test_vectors):
             preds.append(pred)
     return preds
 
+def Evaluate_Model_onDevSet(model, X_test, y_test):
+    
+    preds = GetPredictions(model, X_test)
+
+    print(f"\nEvaluation on Dev Test split \n")
+    precision = Precision(y_test, preds)
+    recall = Recall(y_test, preds)
+    f1_score = F1_Score(y_test, preds)
+
+    print(f"Precision: {precision}")
+    print(f"Recall: {recall}")
+    print(f'F1 Score: {f1_score}')
+
 def Evaluate_Model(model):
     texts, labels = load_test_data('data/HW2-testset.txt')
 
@@ -131,6 +144,7 @@ def Evaluate_Model(model):
 
     preds = GetPredictions(model, vectors)
 
+    print(f"\nEvaluation on 'HW2-testset.txt' \n")
     precision = Precision(labels, preds)
     recall = Recall(labels, preds)
     f1_score = F1_Score(labels, preds)
